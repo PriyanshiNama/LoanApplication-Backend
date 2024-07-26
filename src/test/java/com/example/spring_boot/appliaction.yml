@@ -1,0 +1,9 @@
+spring:
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:h2:mem:TEST
+    driver-class-name: org.h2.Driver
+    username: username
+    password: password
+    hikari:
+      idle-timeout: 10000
