@@ -27,7 +27,7 @@ public class LoanController {
     }
 
     //POST
-    @PostMapping("/appl")
+    @PostMapping("/submit")
     public LoanApplication createApp(@RequestBody LoanApplication data) {
         System.out.println("added");
         return loanRepo.save(data);
