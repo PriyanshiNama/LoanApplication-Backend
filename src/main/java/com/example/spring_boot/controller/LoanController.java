@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.AotInitializerNotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.annotation.CrossOrigin;
 
 // import java.util.HashMap;
 import java.util.List;
@@ -16,7 +15,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/phansbank/v1/")
-@CrossOrigin(origins = "http://localhost:4200")
 public class LoanController {
 
     @Autowired
@@ -39,8 +37,8 @@ public class LoanController {
     @GetMapping("/viewapplication/{id}")
     public ResponseEntity<LoanApplication> getApplicationById(@PathVariable Long id) {
         LoanApplication data = loanRepo.findById(id)
-                .orElseThrow(() -> new AotInitializerNotFoundException(null,
-                        "Application doesn't exist for id"));
+                .orElseThrow(() -> new AotInitializerNotFoundException(null, 
+				"Application doesn't exist for id"));
         return ResponseEntity.ok(data);
     }
 
@@ -48,8 +46,8 @@ public class LoanController {
     // @PutMapping("/appl/{id}")
     // public ResponseEntity<LoanApplication> updateApplicationById(@PathVariable Long id, @RequestBody LoanApplication data) {
     //     LoanApplication la= loanRepo.findById(id)
-    //             .orElseThrow(() -> new AotInitializerNotFoundException(null,
-    // 			"Application doesn't exist for id"));
+    //             .orElseThrow(() -> new AotInitializerNotFoundException(null, 
+	// 			"Application doesn't exist for id"));
     //     //use setters
     // }
 
@@ -57,14 +55,15 @@ public class LoanController {
     // @DeleteMapping("/appl/{id}")
     // public ResponseEntity<Map<String, Boolean>> deleteApp(@PathVariable Long id) {
     //     LoanApplication data = loanRepo.findById(id)
-    //             .orElseThrow(() -> new AotInitializerNotFoundException(null,
-    // 			"Application doesn't exist for id"));
-
+    //             .orElseThrow(() -> new AotInitializerNotFoundException(null, 
+	// 			"Application doesn't exist for id"));
+    
     //             loanRepo.delete(data);
     //             Map<String, Boolean> res=new HashMap<>();
     //             res.put("deleted", Boolean.TRUE);
     //             return ResponseEntity.ok(res);
     //         }
 }
+
 
 
