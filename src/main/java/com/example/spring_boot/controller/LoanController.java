@@ -31,7 +31,7 @@ public class LoanController {
     }
 
     //GET APPCN BY ID-path variable : to view applcn by id
-    @GetMapping("/view/{id}")
+    @GetMapping("/view-application/{id}")
     public ResponseEntity<LoanApplication> getApplicationById(@PathVariable Long id) {
         LoanApplication data = loanRepo.findById(id)
                 .orElseThrow(() -> new AotInitializerNotFoundException(null,
