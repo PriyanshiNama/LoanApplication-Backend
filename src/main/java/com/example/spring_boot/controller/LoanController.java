@@ -8,10 +8,10 @@ import org.springframework.boot.AotInitializerNotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
+// import java.util.HashMap;
 import java.util.List;
 // import java.util.Optional;
-import java.util.Map;
+// import java.util.Map;
 
 @RestController
 @RequestMapping("/phansbank/v1/")
@@ -21,20 +21,20 @@ public class LoanController {
     private LoanApplicationRepository loanRepo;
 
     //	get all applcn
-    @GetMapping("/appl")
+    @GetMapping("/viewapps")
     public List<LoanApplication> getAllIDs() {
         return loanRepo.findAll();
     }
 
     //POST
-    @PostMapping("/appl")
+    @PostMapping("/submit")
     public LoanApplication createApp(@RequestBody LoanApplication data) {
         System.out.println("added");
         return loanRepo.save(data);
     }
 
     //GET APPCN BY ID-path variable : to view applcn by id
-    @GetMapping("/appl/{id}")
+    @GetMapping("/viewapplication/{id}")
     public ResponseEntity<LoanApplication> getApplicationById(@PathVariable Long id) {
         LoanApplication data = loanRepo.findById(id)
                 .orElseThrow(() -> new AotInitializerNotFoundException(null, 
