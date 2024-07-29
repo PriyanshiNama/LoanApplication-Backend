@@ -1,7 +1,10 @@
 package com.example.spring_boot.controller;
 
+// import com.example.spring_boot.dto.LoanDTO;
 import com.example.spring_boot.model.LoanApplication;
 import com.example.spring_boot.repository.LoanApplicationRepository;
+// import com.example.spring_boot.service.LoanApplicationService;
+
 // import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.AotInitializerNotFoundException;
@@ -19,21 +22,30 @@ public class LoanController {
 
     @Autowired
     private LoanApplicationRepository loanRepo;
+    // @Autowired
+    // private LoanApplicationService loanService;
 
     //	get all applcn
     @GetMapping("/viewapps")
     public List<LoanApplication> getAllIDs() {
-        return loanRepo.findAll();
+         return loanRepo.findAll();
     }
+
+    // @GetMapping("/viewapps")
+    // public List<LoanDTO> getAllIDs() {
+    //      return loanRepo.findAll();
+    //     return loanService.getspecific();
+    // }
 
     //POST
     @PostMapping("/submit")
     public LoanApplication createApp(@RequestBody LoanApplication data) {
+       
         System.out.println("added");
         return loanRepo.save(data);
     }
 
-    //GET APPCN BY ID-path variable : to view applcn by id
+    // GET APPCN BY ID-path variable : to view applcn by id
     @GetMapping("/viewapplication/{id}")
     public ResponseEntity<LoanApplication> getApplicationById(@PathVariable Long id) {
         LoanApplication data = loanRepo.findById(id)

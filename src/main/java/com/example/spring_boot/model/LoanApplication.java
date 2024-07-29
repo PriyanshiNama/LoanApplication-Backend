@@ -102,6 +102,10 @@ public class LoanApplication {
     @Column(name = "employer_postal_code")
     private String employerPostalCode;
 
+    // submitted_date get REAL TIME----------------------------------------
+    // @Column(name = "submitted_date")
+    // private String submitted_date;
+
     @Column(name = "application_status")
     private String applicationStatus;
 

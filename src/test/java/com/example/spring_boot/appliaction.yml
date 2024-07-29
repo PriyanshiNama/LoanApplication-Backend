@@ -7,3 +7,8 @@ spring:
     password: password
     hikari:
       idle-timeout: 10000
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
