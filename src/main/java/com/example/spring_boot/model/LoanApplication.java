@@ -16,7 +16,7 @@ public class LoanApplication {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "application_id")
-    private Integer applicationId;
+    private long applicationId;
 
     @Column(name = "first_name")
     private String firstName;
