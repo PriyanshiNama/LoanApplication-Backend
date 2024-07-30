@@ -1,19 +1,19 @@
 // package com.example.spring_boot.dto;
 
-// import jakarta.persistence.Entity;
-// import jakarta.persistence.Id;
-// // import lombok.AllArgsConstructor;
-// import lombok.Data;
-// import lombok.NoArgsConstructor;
+// // import jakarta.persistence.Entity;
+// // import jakarta.persistence.Id;
+// // // import lombok.AllArgsConstructor;
+// // import lombok.Data;
+// // import lombok.NoArgsConstructor;
 
-// @Data
-// @Entity
-// @NoArgsConstructor
+// // @Data
+// // @Entity
+// // @NoArgsConstructor
 // // @AllArgsConstructor
 
 // public class LoanDTO {
 
-//     @Id
+//     // @Id
 //     private Integer application_id;
 //     private String first_name;
 //     private String middle_name;

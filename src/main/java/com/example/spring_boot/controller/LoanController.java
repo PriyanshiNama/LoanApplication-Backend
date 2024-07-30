@@ -33,7 +33,6 @@ public class LoanController {
 
     // @GetMapping("/viewapps")
     // public List<LoanDTO> getAllIDs() {
-    //      return loanRepo.findAll();
     //     return loanService.getspecific();
     // }
 
