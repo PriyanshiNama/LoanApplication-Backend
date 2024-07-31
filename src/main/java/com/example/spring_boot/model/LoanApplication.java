@@ -19,7 +19,7 @@ public class LoanApplication {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "application_id")
-    private Integer applicationId;
+    private long applicationId;
 
     @Column(name = "first_name")
     private String firstName;
@@ -104,6 +104,10 @@ public class LoanApplication {
 
     @Column(name = "employer_postal_code")
     private String employerPostalCode;
+
+    // submitted_date get REAL TIME----------------------------------------
+    // @Column(name = "submitted_date")
+    // private String submitted_date;
 
     @Column(name = "application_status")
     private String applicationStatus;
