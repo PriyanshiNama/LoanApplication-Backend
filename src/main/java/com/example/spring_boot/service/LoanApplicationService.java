@@ -6,6 +6,8 @@ import com.example.spring_boot.model.LoanApplication;
 import com.example.spring_boot.repository.BureauDataRepository;
 import com.example.spring_boot.repository.LoanApplicationRepository;
 
+import jakarta.transaction.Transactional;
+
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -133,7 +135,12 @@ public class LoanApplicationService {
 
     }
 
+    @Transactional
     public void calculateScore(LoanApplication data) {
+        // System.out.print("CALLLEDDDD");
+
+        LoanApplication newd= getApplicationById(data.getApplicationId());
+
         double score=0;
 
         Double lamt =data.getLoanAmount();
@@ -185,10 +192,11 @@ public class LoanApplicationService {
         else if(purpose=="Educational Loan")purposeValue=0.0;
         else purposeValue=1.0 ; //others
 
+        System.out.println("purposeValue: "+ purposeValue);
 
         Double dti=calculateDTI(data);
         //credit age calculated
-        System.out.println(creditAge);
+        System.out.println("credit age" +creditAge);
 
         Double added = checkDescription(data,"added");
         Double borrower = checkDescription(data,"borrower");
@@ -220,14 +228,23 @@ public class LoanApplicationService {
         //score formula
         score = P * 1000;
 
-        System.out.println("Score: "+score);
         double cutoff_credit_score=  390.0;
+        Integer fscore=  (int)score;
+
+        newd.setScore(fscore);
+
         if(cutoff_credit_score> score){
-            data.setApplicationStatus("Declined");
-            data.setDeclineReason("Your score is less than the cutoff credit score");
+            newd.setApplicationStatus("Declined");
+            newd.setDeclineReason("Your score is less than the cutoff credit score");
         }else{
-            data.setApplicationStatus("Approved");
+            newd.setApplicationStatus("Approved");
         }
+
+        System.out.println("score: "+ score);
+
+
+        loanRepo.save(newd);
+
         // return score;
     }
 }
