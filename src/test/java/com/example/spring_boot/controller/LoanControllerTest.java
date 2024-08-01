@@ -1,5 +1,6 @@
 package com.example.spring_boot.controller;
 
+import com.example.spring_boot.Application;
 import com.example.spring_boot.model.LoanApplication;
 import com.example.spring_boot.service.LoanApplicationService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -23,7 +24,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @ExtendWith(SpringExtension.class)
-@SpringBootTest
+@SpringBootTest(classes = Application.class)
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
 public class LoanControllerTest {
@@ -39,15 +40,15 @@ public class LoanControllerTest {
         // Setup mock LoanApplication object
         LoanApplication loanApplication = new LoanApplication();
         loanApplication.setApplicationId(1L); // Ensure Long literals
-        loanApplication.setFirstName("John");
-        loanApplication.setLastName("Doe");
+        loanApplication.setFirstName("Priyanshi");
+        loanApplication.setLastName("Nama");
         loanApplication.setLoanAmount(5000.0);
 
         // Setup mocks for service methods
         Mockito.when(loanService.getAllIDs()).thenReturn(Collections.singletonList(loanApplication));
         Mockito.when(loanService.createApp(Mockito.any(LoanApplication.class))).thenAnswer(invocation -> {
             LoanApplication app = invocation.getArgument(0);
-            app.setFirstName("Jane"); // Set the expected value for the test
+            app.setFirstName("Sanskriti"); // Set the expected value for the test
             return app;
         });
         Mockito.when(loanService.getApplicationById(1L)).thenReturn(loanApplication);
@@ -58,21 +59,21 @@ public class LoanControllerTest {
         mockMvc.perform(get("/phansbank/v1/viewapps"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$[0].firstName", is("John")));
+                .andExpect(jsonPath("$[0].firstName", is("Priyanshi")));
     }
 
     @Test
     public void testCreateApp() throws Exception {
         LoanApplication newLoanApplication = new LoanApplication();
-        newLoanApplication.setFirstName("Jane");
-        newLoanApplication.setLastName("Doe");
+        newLoanApplication.setFirstName("Sanskriti");
+        newLoanApplication.setLastName("Shrivastava");
         newLoanApplication.setLoanAmount(7000.0);
 
         mockMvc.perform(post("/phansbank/v1/submit")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(asJsonString(newLoanApplication)))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(asJsonString(newLoanApplication)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.firstName", is("Jane"))); // Verify the correct result
+                .andExpect(jsonPath("$.firstName", is("Sanskriti"))); // Verify the correct result
     }
 
     @Test
@@ -80,7 +81,7 @@ public class LoanControllerTest {
         mockMvc.perform(get("/phansbank/v1/viewapps/1"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.firstName", is("John")));
+                .andExpect(jsonPath("$.firstName", is("Priyanshi")));
     }
 
     private static String asJsonString(final Object obj) {
