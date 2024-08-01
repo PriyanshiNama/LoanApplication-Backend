@@ -233,10 +233,36 @@ public class LoanApplicationService {
 
         newd.setScore(fscore);
 
-        if(cutoff_credit_score> score){
+        //  •	Applicant’s age is <18 or >65.
+        // •	Applicant’s work experience is < 6 months
+        // •	Applicants annual salary is < $10,000
+
+        
+        String dob=newd.getDateOfBirth();
+        int doby= Integer.parseInt(dob.substring(0, 3));
+       
+        int age= GetCurrentYear()- doby;
+
+        String res="";
+        
+        if(cutoff_credit_score>score || age<18 || age>65 || emp<0.6 || salary<10000){
+            if(cutoff_credit_score>score){
+               
+                res+="Your score is less than the cutoff credit score.";
+            }
+            if(age<18 || age>65){
+                res+="Applicant’s age is <18 or >65.";
+            }
+            if(emp<0.6){
+                res+="Applicant’s work experience is < 6 months.";
+            }
+            if(salary<10000){
+                res+="Applicants annual salary is < $10,000.";
+            }
             newd.setApplicationStatus("Declined");
-            newd.setDeclineReason("Your score is less than the cutoff credit score");
-        }else{
+            newd.setApplicationStatus(res);
+         }
+        else{
             newd.setApplicationStatus("Approved");
         }
 
