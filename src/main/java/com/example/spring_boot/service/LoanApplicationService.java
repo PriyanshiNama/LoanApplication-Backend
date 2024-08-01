@@ -8,6 +8,7 @@ import com.example.spring_boot.repository.LoanApplicationRepository;
 
 import jakarta.transaction.Transactional;
 
+import java.time.Period;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -103,6 +104,7 @@ public class LoanApplicationService {
     }
 
     public LoanApplication getApplicationById(Long id) {
+
         return loanRepo.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Application doesn't exist for id: " + id));
     }
@@ -133,6 +135,10 @@ public class LoanApplicationService {
         int currentYearFromYear = currentYearObj.getValue();
         return currentYearFromYear;
 
+    }
+    public int calculateAge(LocalDate dob) {
+        LocalDate today = LocalDate.now();
+        return Period.between(dob, today).getYears();
     }
 
     @Transactional
@@ -233,15 +239,36 @@ public class LoanApplicationService {
 
         newd.setScore(fscore);
 
-        if(cutoff_credit_score> score){
-            newd.setApplicationStatus("Declined");
-            newd.setDeclineReason("Your score is less than the cutoff credit score");
-        }else{
-            newd.setApplicationStatus("Approved");
+        //Decline Reason
+        int age = calculateAge(LocalDate.parse(data.getDateOfBirth()));
+        String applicationStatus = "Approved";
+        StringBuilder declineReasons = new StringBuilder();
+        Double workExp = (double) data.getWorkExperienceYears() + ((double) data.getWorkExperienceMonths() / 12.0);
+        if(age<18 || age>65){
+            applicationStatus = "Declined";
+            declineReasons.append("Your age is not within the acceptable range.");
+        }
+        if(workExp< (6.0/12.0)){
+            applicationStatus = "Declined";
+            declineReasons.append("Your work experience is less than 6 months.");
+        }
+        if(data.getAnnualSalary() < 10000){
+            applicationStatus = "Declined";
+            declineReasons.append("Your annual salary is less than $10,000.");
+        }
+        if(cutoff_credit_score>score){
+            applicationStatus = "Declined";
+            declineReasons.append("Your score is less than the cutoff credit score");
         }
 
-        System.out.println("score: "+ score);
-
+        newd.setApplicationStatus(applicationStatus);
+        if (applicationStatus.equals("Declined")) {
+            newd.setDeclineReason(declineReasons.toString().trim());
+        }
+        else {
+            newd.setDeclineReason("");
+        }
+//        System.out.println("score: "+ score);
 
         loanRepo.save(newd);
 
