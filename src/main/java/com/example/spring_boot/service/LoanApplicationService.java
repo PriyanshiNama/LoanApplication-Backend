@@ -224,6 +224,7 @@ public class LoanApplicationService {
         double cutoff_credit_score=  390.0;
         if(cutoff_credit_score> score){
             data.setApplicationStatus("Declined");
+            data.setDeclineReason("Your score is less than the cutoff credit score");
         }else{
             data.setApplicationStatus("Approved");
         }
